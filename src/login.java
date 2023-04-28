@@ -26,7 +26,7 @@ public class login extends javax.swing.JFrame {
                     rs = ps.executeQuery();
                     if (rs.next()) {
                         if (rs.getString(3).equals(password.getText())) {
-                            mensaje.success("Inicio de sesión:", "¡Has iniciado sesión correctamente!");
+                            mensaje.success("Inicio de sesión:", rs.getString(7)+", ha iniciado sesión correctamente!");
                         } else {
                             mensaje.error("Inicio de sesión:", "¡Contraseña incorrecta!");
                         }
