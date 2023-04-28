@@ -3,7 +3,7 @@ package base_datos;
 import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import javax.swing.JOptionPane;
+import otros.mensaje;
 
 public class conexion {
 
@@ -18,7 +18,7 @@ public class conexion {
             con = DriverManager.getConnection(url, usuario, clave);
         } catch (Exception e) {
             Toolkit.getDefaultToolkit().beep();
-            JOptionPane.showMessageDialog(null, "¡No se pudo conectar a la base de datos!", "Error de conexión", JOptionPane.ERROR_MESSAGE);
+            mensaje.error("Error de conexión:", "¡No se pudo conectar a la base de datos!");
         }
         return con;
     }

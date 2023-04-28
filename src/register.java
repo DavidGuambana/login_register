@@ -1,7 +1,8 @@
+import otros.mensaje;
 import base_datos.conexion;
 import java.sql.*;
 import com.mysql.jdbc.PreparedStatement;
-import rojerusan.RSNotifyAnimated;
+import otros.validar;
 
 public class register extends javax.swing.JFrame {
 
@@ -17,7 +18,7 @@ public class register extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     public void registrar() {
         if (cedula.getText().isEmpty() || name.getText().isEmpty()|| lastname.getText().isEmpty()|| phone.getText().isEmpty()||email.getText().isEmpty()|| username.getText().isEmpty()||password.getText().isEmpty()) {
-            warning("Mensaje de precaución:","¡Aún hay campos por completar!");
+            mensaje.warning("Mensaje de registro:","¡Aún hay campos por completar!");
         } else {
             con = conexion.conectar();
             if (con != null) {
@@ -32,31 +33,19 @@ public class register extends javax.swing.JFrame {
                     ps.setString(7, username.getText());
                     
                     ps.executeUpdate();
-                    success("Mensaje de registro:","¡Registrado correctamente!");
+                    mensaje.success("Mensaje de registro:","¡Registrado correctamente!");
                     this.dispose();
                     login log = new login();
                     log.setVisible(true);
                 } catch (SQLException ex) {
                     getToolkit().beep();
-                    error("Mensaje de error:","¡Este usuario ya existe!");
+                    mensaje.error("Mensaje registro:","¡Este usuario ya existe!");
                 }
             }
         }
     }
 
-    public static void success(String actividad, String mensaje) {
-        new rojerusan.RSNotifyAnimated(actividad, mensaje, 5, RSNotifyAnimated.PositionNotify.TopRight, RSNotifyAnimated.AnimationNotify.RightLeft, RSNotifyAnimated.TypeNotify.SUCCESS).setVisible(true);
-    }
-
-    public static void warning(String actividad, String mensaje) {
-        new rojerusan.RSNotifyAnimated(actividad, mensaje,
-                5, RSNotifyAnimated.PositionNotify.TopRight, RSNotifyAnimated.AnimationNotify.RightLeft, RSNotifyAnimated.TypeNotify.WARNING).setVisible(true);
-    }
-
-    public static void error(String actividad, String mensaje) {
-        new rojerusan.RSNotifyAnimated(actividad, mensaje, 5, RSNotifyAnimated.PositionNotify.TopRight, RSNotifyAnimated.AnimationNotify.RightLeft,
-                RSNotifyAnimated.TypeNotify.ERROR).setVisible(true);
-    }
+   
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -117,12 +106,22 @@ public class register extends javax.swing.JFrame {
         password.setForeground(new java.awt.Color(0, 102, 102));
         password.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         password.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Contraseña:", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Light", 0, 14))); // NOI18N
+        password.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passwordKeyPressed(evt);
+            }
+        });
         getContentPane().add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 300, 170, 60));
 
         cedula.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         cedula.setForeground(new java.awt.Color(0, 102, 102));
         cedula.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         cedula.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cédula de identidad:", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Light", 0, 14), new java.awt.Color(51, 51, 51))); // NOI18N
+        cedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cedulaKeyPressed(evt);
+            }
+        });
         getContentPane().add(cedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 60, 170, 60));
 
         jPanel2.setBackground(new java.awt.Color(0, 102, 102));
@@ -130,7 +129,7 @@ public class register extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Inicio de Sesión");
+        jLabel4.setText("Registro de usuario");
         jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jl_cerrar.setFont(new java.awt.Font("Yu Gothic UI", 1, 24)); // NOI18N
@@ -152,7 +151,7 @@ public class register extends javax.swing.JFrame {
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 694, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jl_cerrar)
-                .addGap(0, 13, Short.MAX_VALUE))
+                .addGap(0, 18, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,12 +194,22 @@ public class register extends javax.swing.JFrame {
         username.setForeground(new java.awt.Color(0, 102, 102));
         username.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         username.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nombre de usuario:", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Light", 0, 14), new java.awt.Color(51, 51, 51))); // NOI18N
+        username.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                usernameKeyPressed(evt);
+            }
+        });
         getContentPane().add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, 170, 60));
 
         phone.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         phone.setForeground(new java.awt.Color(0, 102, 102));
         phone.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         phone.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Celular:", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Light", 0, 14), new java.awt.Color(51, 51, 51))); // NOI18N
+        phone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                phoneKeyPressed(evt);
+            }
+        });
         getContentPane().add(phone, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 140, 170, 60));
 
         email.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
@@ -213,12 +222,22 @@ public class register extends javax.swing.JFrame {
         lastname.setForeground(new java.awt.Color(0, 102, 102));
         lastname.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         lastname.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Apellido:", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Light", 0, 14), new java.awt.Color(51, 51, 51))); // NOI18N
+        lastname.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                lastnameKeyPressed(evt);
+            }
+        });
         getContentPane().add(lastname, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, 170, 60));
 
         name.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         name.setForeground(new java.awt.Color(0, 102, 102));
         name.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         name.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nombre:", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Light", 0, 14), new java.awt.Color(51, 51, 51))); // NOI18N
+        name.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                nameKeyPressed(evt);
+            }
+        });
         getContentPane().add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 60, 170, 60));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/botella-de-plastico.png"))); // NOI18N
@@ -254,6 +273,30 @@ public class register extends javax.swing.JFrame {
         login log = new login();
         log.setVisible(true);
     }//GEN-LAST:event_jl_cerrarMouseClicked
+
+    private void cedulaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cedulaKeyPressed
+        validar.V_numero(cedula,10);
+    }//GEN-LAST:event_cedulaKeyPressed
+
+    private void nameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameKeyPressed
+        validar.V_letras(name,30);
+    }//GEN-LAST:event_nameKeyPressed
+
+    private void lastnameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lastnameKeyPressed
+        validar.V_letras(lastname,30);
+    }//GEN-LAST:event_lastnameKeyPressed
+
+    private void phoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_phoneKeyPressed
+        validar.V_numero(phone,15);
+    }//GEN-LAST:event_phoneKeyPressed
+
+    private void usernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameKeyPressed
+        validar.V_letras(username,30);
+    }//GEN-LAST:event_usernameKeyPressed
+
+    private void passwordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordKeyPressed
+        validar.V_contraseña(password, 50);
+    }//GEN-LAST:event_passwordKeyPressed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {

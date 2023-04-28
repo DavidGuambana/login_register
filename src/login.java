@@ -1,7 +1,8 @@
+import otros.mensaje;
 import base_datos.conexion;
 import java.sql.*;
 import com.mysql.jdbc.PreparedStatement;
-import javax.swing.JOptionPane;
+import otros.validar;
 
 public class login extends javax.swing.JFrame {
 
@@ -16,21 +17,21 @@ public class login extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     public static void iniciar_sesion() {
         if (user.getText().isEmpty() || password.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "¡Aún hay campos por completar!");
+            mensaje.warning("Inicio de sesión:","¡Aún hay campos por completar!");
         } else {
             con = conexion.conectar();
             if (con != null) {
                 try {
-                    ps = (PreparedStatement) con.prepareStatement("SELECT * FROM usuario WHERE cedula_usu ='"+user.getText()+"'");
+                    ps = (PreparedStatement) con.prepareStatement("SELECT * FROM usuario WHERE cedula_usu ='" + user.getText() + "'");
                     rs = ps.executeQuery();
                     if (rs.next()) {
                         if (rs.getString(3).equals(password.getText())) {
-                            JOptionPane.showMessageDialog(null, "¡Felicidades "+rs.getString(2)+"! Has iniciado sesión correctamente!"); 
-                        } else{
-                            JOptionPane.showMessageDialog(null, "¡Contraseña incorrecta!"); 
+                            mensaje.success("Inicio de sesión:", "¡Has iniciado sesión correctamente!");
+                        } else {
+                            mensaje.error("Inicio de sesión:", "¡Contraseña incorrecta!");
                         }
-                    } else{
-                       JOptionPane.showMessageDialog(null, "¡El usuario '"+user.getText()+"' no está registrado!"); 
+                    } else {
+                        mensaje.error("Inicio de sesión:", "¡El usuario '" + user.getText() + "' no está registrado!");
                     }
                 } catch (SQLException ex) {
                 }
@@ -140,12 +141,18 @@ public class login extends javax.swing.JFrame {
         user.setForeground(new java.awt.Color(0, 102, 102));
         user.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         user.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cédula de identidad:", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Light", 0, 14), new java.awt.Color(51, 51, 51))); // NOI18N
+        user.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                userKeyPressed(evt);
+            }
+        });
         getContentPane().add(user, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 200, 350, 60));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("He olvidado mi contraseña");
+        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel3MouseClicked(evt);
@@ -263,6 +270,10 @@ public class login extends javax.swing.JFrame {
         ingresar_usu ing = new ingresar_usu();
         ing.setVisible(true);
     }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void userKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userKeyPressed
+        validar.V_numero(user,10);
+    }//GEN-LAST:event_userKeyPressed
 
     /**
      * @param args the command line arguments
